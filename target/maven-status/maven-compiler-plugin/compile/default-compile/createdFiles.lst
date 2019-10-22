@@ -1,0 +1,7 @@
+org/mycompany/myname/servlets/RegisterServlet.class
+org/mycompany/myname/model/FilesList.class
+org/mycompany/myname/servlets/DirectoryServlet.class
+org/mycompany/myname/service/AccountService.class
+org/mycompany/myname/model/UserProfile.class
+org/mycompany/myname/servlets/LoginServlet.class
+org/mycompany/myname/service/MakeFilesListService.class
