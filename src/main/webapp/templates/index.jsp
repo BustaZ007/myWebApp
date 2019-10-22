@@ -15,9 +15,7 @@
 <html>
     <head>
         <meta charset='UTF-8' />
-        <link rel="icon" href="res/icons/icon.jpg" />
-        <link rel="stylesheet" type="text/css" href="src/css/dirStyle.css" />
-        <% out.println("<title>" + usname + " | FTP-Like</title>");%>
+        <title>InDirectory</title>
     </head>
     <body>
         <header>
@@ -29,7 +27,7 @@
                     out.println("</a>");
                 }
                 else {
-                    out.println("<span> You are in your home dir </span>");
+                    out.println("<span> You are in your home directory </span>");
                 }
                 out.println("</div>");
             %>

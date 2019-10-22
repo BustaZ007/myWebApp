@@ -12,22 +12,17 @@
     if(errPass == null){
         errPass = false;
     }
-    if(isLgnForm == null){
-        isLgnForm = true;
-    }
 %>
 
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset='UTF-8' />
-	    <link rel="icon" href="res/icons/icon.jpg" />
-	    <link rel="stylesheet" href="src/css/logStyle.css" />
-	    <title>FTP-Like</title>
+	    <title>InDirectory</title>
 	</head>
 	<body>
 		<div class="wrapper">
-			<form class="logform" action="/login" method="post" name="login" style='<%= (isLgnForm ? "" : "display: none;") %>'>
+			<form class="logform" action="/login" method="post" name="login" >
 				<p> Login </p>
 				<div class="inputs">
 					<input class="login" type="text" name="login" placeholder="login" required />
@@ -47,11 +42,11 @@
 
             <%
                 if(errLog){
-                    out.println("<span class='error'>login error</span>");
+                    out.println("<span class='error'>Login error</span>");
                     request.getSession().setAttribute("errLog", false);
                 }
                 if(errPass){
-                    out.println("<span class='error'>password error</span>");
+                    out.println("<span class='error'>Password error</span>");
                     request.getSession().setAttribute("errMail",false);
                 }
             %>
