@@ -21,12 +21,12 @@ public class DirectoryServlet extends HttpServlet {
             String path = request.getParameter("path");
 
             if (path == null) {
-                path = user.getHomeDir().getAbsolutePath();
+                path = user.getHomeDir().getAbsolutePath() + "/";
             }
 
             path = new String(path.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             FilesList list = new MakeFilesListService().readPath(path);
-            if (path.contains(user.getHomeDir().getAbsolutePath()) && list != null) {
+            if (path.contains(user.getHomeDir().getAbsolutePath() + "/") && list != null) {
                 request.setAttribute("dirs", list.getDirectories());
                 request.setAttribute("files", list.getFiles());
                 request.setAttribute("parent", list.getParent());
