@@ -16,13 +16,20 @@ public class RegisterServlet extends HttpServlet {
 
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
+        String email = request.getParameter("email");
         UserProfile user = AccountService.getUserByLogin(login);
         if(user != null){
-            request.getSession().setAttribute("errLog", true);
+            request.getSession().setAttribute("errLogin", true);
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+        user = AccountService.getUserByMail(email);
+        if(user != null){
+            request.getSession().setAttribute("errMail", true);
             response.sendRedirect(request.getContextPath() + "/login");
         }
         else {
-            user = new UserProfile(login,pass);
+            user = new UserProfile(login, pass, email);
             AccountService.addNewUser(user);
             request.getSession().setAttribute(userCookieName, user);
             response.sendRedirect(request.getContextPath() + "/");

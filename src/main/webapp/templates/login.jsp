@@ -3,14 +3,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    Boolean errLog  = (Boolean)request.getSession().getAttribute("errLog");
-    Boolean errPass = (Boolean)request.getSession().getAttribute("errPass");
-    Boolean isLgnForm = (Boolean)request.getSession().getAttribute("isLgnForm");
-    if(errLog == null){
-        errLog = false;
+    Boolean errLogin  = (Boolean)request.getSession().getAttribute("errLogin");
+    Boolean errPassword = (Boolean)request.getSession().getAttribute("errPassword");
+    Boolean errMail = (Boolean)request.getSession().getAttribute("errMail");
+    if(errLogin == null){
+        errLogin = false;
     }
-    if(errPass == null){
-        errPass = false;
+    if(errPassword == null){
+        errPassword = false;
+    }
+    if(errMail == null){
+        errMail = false;
     }
 %>
 
@@ -35,18 +38,23 @@
 		        <p>Register</p>
 		        <div class="inputs">
 			        <input class="login" type="text" name="login" placeholder="login" required />
+			        <input class="mail" type="text" name="email" placeholder="email" required />
 			        <input class="password" type="password" name="password" placeholder="password" required />
 		    	</div>
 		        <input class="btn" type="submit" value="Register"/>
 		    </form>
 
             <%
-                if(errLog){
+                if(errLogin){
                     out.println("<span class='error'>Login error</span>");
                     request.getSession().setAttribute("errLog", false);
                 }
-                if(errPass){
+                if(errPassword){
                     out.println("<span class='error'>Password error</span>");
+                    request.getSession().setAttribute("errMail",false);
+                }
+                if(errMail){
+                    out.println("<span class='error'>Email error</span>");
                     request.getSession().setAttribute("errMail",false);
                 }
             %>

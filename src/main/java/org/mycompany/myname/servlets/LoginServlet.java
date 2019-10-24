@@ -32,16 +32,19 @@ public class LoginServlet extends HttpServlet {
         String pass = request.getParameter("password");
         UserProfile user = AccountService.getUserByLogin(login);
         if (user == null){
-            request.getSession().setAttribute("errLog", true);
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
+            user = AccountService.getUserByMail(login);
+            if(user == null) {
+                request.getSession().setAttribute("errLogin", true);
+                response.sendRedirect(request.getContextPath() + "/login");
+                return;
+            }
         }
         if (user.getPass().equals(pass)){
             request.getSession().setAttribute(userCookieName, user);
             response.sendRedirect(request.getContextPath() + "/");
         }
         else {
-            request.getSession().setAttribute("errPass", true);
+            request.getSession().setAttribute("errPassword", true);
             response.sendRedirect(request.getContextPath() + "/login");
         }
     }

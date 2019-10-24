@@ -26,10 +26,6 @@ public class DirectoryServlet extends HttpServlet {
 
             path = new String(path.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             FilesList list = new MakeFilesListService().readPath(path);
-
-            System.out.println(path);
-            System.out.println(user.getHomeDir().getAbsoluteFile());
-
             if (path.contains(user.getHomeDir().getAbsolutePath()) && list != null) {
                 request.setAttribute("dirs", list.getDirectories());
                 request.setAttribute("files", list.getFiles());

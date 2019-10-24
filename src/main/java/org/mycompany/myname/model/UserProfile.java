@@ -6,11 +6,14 @@ public class UserProfile {
     private final String login;
     private final String pass;
     private final File homeDir;
+    private final String email;
 
-    public UserProfile(String login, String pass) {
+    public UserProfile(String login, String pass, String email) {
         this.login = login;
         this.pass = pass;
         this.homeDir = new File("/Users/pavelzaborin/MWA/"+login);
+        this.email = email;
+
         homeDir.mkdirs();
     }
 
@@ -25,5 +28,7 @@ public class UserProfile {
     public File getHomeDir() {
         return homeDir;
     }
+
+    public String getEmail(){ return email; }
 
 }
