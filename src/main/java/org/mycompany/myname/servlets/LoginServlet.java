@@ -1,7 +1,6 @@
 package org.mycompany.myname.servlets;
 
-import org.mycompany.myname.model.UserProfile;
-import org.mycompany.myname.service.AccountService;
+import org.mycompany.myname.database.JDBCMyClass;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +16,7 @@ public class LoginServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession ses = request.getSession();
 
-        UserProfile user = (UserProfile) ses.getAttribute(userCookieName);
+        String user = (String)ses.getAttribute(userCookieName);
 
         if (user == null) {
             getServletContext().getRequestDispatcher("/templates/login.jsp").forward(request, response);
@@ -30,22 +29,23 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
-        UserProfile user = AccountService.getUserByLogin(login);
-        if (user == null){
-            user = AccountService.getUserByMail(login);
-            if(user == null) {
+        Boolean userFind = JDBCMyClass.findUserByLogin(login);
+        if (userFind == null || !userFind){
+            userFind = JDBCMyClass.findUserByMail(login);
+            if(userFind == null || !userFind) {
                 request.getSession().setAttribute("errLogin", true);
                 response.sendRedirect(request.getContextPath() + "/login");
                 return;
             }
         }
-        if (user.getPass().equals(pass)){
-            request.getSession().setAttribute(userCookieName, user);
-            response.sendRedirect(request.getContextPath() + "/");
-        }
-        else {
+        Boolean userConnect = JDBCMyClass.tryConnect(login,pass);
+        if (userConnect == null || !userConnect){
             request.getSession().setAttribute("errPassword", true);
             response.sendRedirect(request.getContextPath() + "/login");
+        }
+        else {
+            request.getSession().setAttribute(userCookieName, login);
+            response.sendRedirect(request.getContextPath() + "/");
         }
     }
 }

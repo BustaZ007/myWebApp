@@ -8,7 +8,6 @@
     String parentPath = (String)request.getAttribute("parent");
     String home = (String)request.getAttribute("homedir");
     String URI = (String)request.getAttribute("uri");
-    String usname = (String)request.getAttribute("usname");
 %>
 
 <!DOCTYPE html>
@@ -21,7 +20,7 @@
         <header>
             <%
                 out.println("<div class='back'>");
-                if(!parentPath.equals(home)){
+                if((parentPath+"/").contains(home)){
                     out.println("<a href='" + URI + "?path=" + parentPath +"'>");
                     out.println("<span>" + parentPath + "</span>");
                     out.println("</a>");

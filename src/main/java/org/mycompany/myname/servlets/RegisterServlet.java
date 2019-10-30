@@ -1,7 +1,6 @@
 package org.mycompany.myname.servlets;
 
-import org.mycompany.myname.model.UserProfile;
-import org.mycompany.myname.service.AccountService;
+import org.mycompany.myname.database.JDBCMyClass;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,22 +16,28 @@ public class RegisterServlet extends HttpServlet {
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
         String email = request.getParameter("email");
-        UserProfile user = AccountService.getUserByLogin(login);
-        if(user != null){
-            request.getSession().setAttribute("errLogin", true);
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
+        Boolean userFind = JDBCMyClass.findUserByLogin(login);
+        try {
+            if(userFind){
+                request.getSession().setAttribute("errLogin", true);
+                response.sendRedirect(request.getContextPath() + "/login");
+                return;
+            }
+            userFind = JDBCMyClass.findUserByMail(email);
+            if(userFind){
+                request.getSession().setAttribute("errMail", true);
+                response.sendRedirect(request.getContextPath() + "/login");
+            }
+            else {
+                JDBCMyClass.addUser(login,email,pass);
+                request.getSession().setAttribute(userCookieName, login);
+                response.sendRedirect(request.getContextPath() + "/");
+            }
+            System.out.println("Registr complete for " + login);
         }
-        user = AccountService.getUserByMail(email);
-        if(user != null){
-            request.getSession().setAttribute("errMail", true);
-            response.sendRedirect(request.getContextPath() + "/login");
+        catch (NullPointerException ex){
+            ex.getStackTrace();
         }
-        else {
-            user = new UserProfile(login, pass, email);
-            AccountService.addNewUser(user);
-            request.getSession().setAttribute(userCookieName, user);
-            response.sendRedirect(request.getContextPath() + "/");
-        }
+
     }
 }
