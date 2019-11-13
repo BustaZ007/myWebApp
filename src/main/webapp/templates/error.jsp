@@ -1,3 +1,9 @@
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    String login = (String)request.getAttribute("log");
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -7,7 +13,9 @@
     <body>
         <div>Error in parameter "path". Use parameter "path" in addres line.
         Or use root directory: <br>
-        <a href = '/?path=/'>Root directory</a>
+        <%
+            out.println("<a href = 'http://localhost:8088/?path=/Users/pavelzaborin/MWA/" + login + "'>Root directory</a>");
+        %>
         </div>
     </body>
 </html>

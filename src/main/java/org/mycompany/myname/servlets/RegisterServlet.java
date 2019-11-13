@@ -1,6 +1,7 @@
 package org.mycompany.myname.servlets;
 
-import org.mycompany.myname.database.JDBCMyClass;
+import org.mycompany.myname.database.UserProfileDaoHib;
+import org.mycompany.myname.model.UserProfile;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import java.io.IOException;
 
 public class RegisterServlet extends HttpServlet {
     private String userCookieName = "loginedUser";
+    private UserProfileDaoHib hib = new UserProfileDaoHib();
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -16,20 +18,20 @@ public class RegisterServlet extends HttpServlet {
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
         String email = request.getParameter("email");
-        Boolean userFind = JDBCMyClass.findUserByLogin(login);
+        UserProfile user = hib.findUserByLoginOrEmail(login);
         try {
-            if(userFind){
+            if(user != null){
                 request.getSession().setAttribute("errLogin", true);
                 response.sendRedirect(request.getContextPath() + "/login");
                 return;
             }
-            userFind = JDBCMyClass.findUserByMail(email);
-            if(userFind){
+            user = hib.findUserByLoginOrEmail(email);
+            if(user != null){
                 request.getSession().setAttribute("errMail", true);
                 response.sendRedirect(request.getContextPath() + "/login");
             }
             else {
-                JDBCMyClass.addUser(login,email,pass);
+                hib.addUser(login,email,pass);
                 request.getSession().setAttribute(userCookieName, login);
                 response.sendRedirect(request.getContextPath() + "/");
             }

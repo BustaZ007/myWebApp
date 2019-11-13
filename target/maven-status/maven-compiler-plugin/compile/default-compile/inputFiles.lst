@@ -1,7 +1,9 @@
-/Users/pavelzaborin/IdeaProjects/3 course/MyWebApp/src/main/java/org/mycompany/myname/model/FilesList.java
-/Users/pavelzaborin/IdeaProjects/3 course/MyWebApp/src/main/java/org/mycompany/myname/servlets/RegisterServlet.java
-/Users/pavelzaborin/IdeaProjects/3 course/MyWebApp/src/main/java/org/mycompany/myname/model/UserProfile.java
-/Users/pavelzaborin/IdeaProjects/3 course/MyWebApp/src/main/java/org/mycompany/myname/service/AccountService.java
-/Users/pavelzaborin/IdeaProjects/3 course/MyWebApp/src/main/java/org/mycompany/myname/servlets/DirectoryServlet.java
-/Users/pavelzaborin/IdeaProjects/3 course/MyWebApp/src/main/java/org/mycompany/myname/service/MakeFilesListService.java
-/Users/pavelzaborin/IdeaProjects/3 course/MyWebApp/src/main/java/org/mycompany/myname/servlets/LoginServlet.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/service/MakeFilesListService.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/model/UserProfile.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/servlets/DirectoryServlet.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/model/FilesList.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/servlets/RegisterServlet.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/database/HibernateSessionFactoryUtil.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/database/IUserProfileDao.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/database/UserProfileDaoHib.java
+/Users/pavelzaborin/IdeaProjects/3_course/MyWebApp/src/main/java/org/mycompany/myname/servlets/LoginServlet.java

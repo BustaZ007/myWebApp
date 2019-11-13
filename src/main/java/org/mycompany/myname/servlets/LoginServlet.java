@@ -1,6 +1,7 @@
 package org.mycompany.myname.servlets;
 
-import org.mycompany.myname.database.JDBCMyClass;
+import org.mycompany.myname.database.UserProfileDaoHib;
+import org.mycompany.myname.model.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,7 @@ import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
     private String userCookieName = "loginedUser";
+    private UserProfileDaoHib hib = new UserProfileDaoHib();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,22 +31,18 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
-        Boolean userFind = JDBCMyClass.findUserByLogin(login);
-        if (userFind == null || !userFind){
-            userFind = JDBCMyClass.findUserByMail(login);
-            if(userFind == null || !userFind) {
+        UserProfile user = hib.findUserByLoginOrEmail(login);
+        if (user == null){
                 request.getSession().setAttribute("errLogin", true);
                 response.sendRedirect(request.getContextPath() + "/login");
                 return;
             }
-        }
-        Boolean userConnect = JDBCMyClass.tryConnect(login,pass);
-        if (userConnect == null || !userConnect){
+        if (!user.getPass().equals(pass)){
             request.getSession().setAttribute("errPassword", true);
             response.sendRedirect(request.getContextPath() + "/login");
         }
         else {
-            request.getSession().setAttribute(userCookieName, login);
+            request.getSession().setAttribute(userCookieName, user.getLogin());
             response.sendRedirect(request.getContextPath() + "/");
         }
     }

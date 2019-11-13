@@ -1,9 +1,7 @@
 package org.mycompany.myname.servlets;
 
-import org.mycompany.myname.database.JDBCMyClass;
 import org.mycompany.myname.model.FilesList;
 import org.mycompany.myname.service.MakeFilesListService;
-import org.mycompany.myname.model.UserProfile;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -12,6 +10,8 @@ import java.nio.charset.StandardCharsets;
 
 public class DirectoryServlet extends HttpServlet {
     private String userCookieName = "loginedUser";
+
+    private String homeDir = "/Users/pavelzaborin/MWA/";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, NullPointerException {
@@ -26,20 +26,21 @@ public class DirectoryServlet extends HttpServlet {
             String path = request.getParameter("path");
 
             if (path == null) {
-                path = JDBCMyClass.getDirectory(login);
+                path = homeDir + login + "/";
             }
 
             path = new String(path.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
             FilesList list = new MakeFilesListService().readPath(path);
-            if ((path + "/").contains(JDBCMyClass.getDirectory(login)) && list != null) {
+            if ((path + "/").contains(homeDir + login + "/") && list != null) {
                 request.setAttribute("dirs", list.getDirectories());
                 request.setAttribute("files", list.getFiles());
                 request.setAttribute("parent", list.getParent());
-                request.setAttribute("homedir", JDBCMyClass.getDirectory(login));
+                request.setAttribute("homedir", homeDir + login + "/");
                 request.setAttribute("uri", request.getRequestURI());
 
                 getServletContext().getRequestDispatcher("/templates/index.jsp").forward(request, response);
             } else {
+                request.setAttribute("log", login);
                 getServletContext().getRequestDispatcher("/templates/error.jsp").forward(request, response);
             }
         } catch (NullPointerException ex) {
